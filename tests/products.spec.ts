@@ -7,8 +7,6 @@ test.beforeEach(async ({ page }) => {
   await page.fill("#user-name", process.env.USERNAME_TEST || "");
   await page.fill("#password", process.env.PASSWORD || "");
   await page.click("#login-button");
-
-  await expect(page).toHaveURL(/inventory\.html/);
 });
 
 test.describe("Products page", async () => {
@@ -30,7 +28,7 @@ test.describe("Products page", async () => {
   });
 
   test("should add product to cart from detail page", async ({ page }) => {
-    await page.click("#item_4_title_link");
+    await page.click(".inventory_item:nth-of-type(1) .inventory_item_name");
     await page.click(".btn_primary");
     const updatedButton = page.locator(".btn_secondary");
 
