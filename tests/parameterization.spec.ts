@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { userData } from "./test-data/user-data";
 
-test.describe.only("Page availability", async () => {
+test.describe("Page availability", async () => {
   for (const { testPage, pageKey, isLogout } of userData) {
     test(`should load ${testPage} and display site logo`, async ({ page }) => {
         if(isLogout) {
