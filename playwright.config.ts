@@ -17,6 +17,7 @@ export default defineConfig({
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+  globalSetup: './global-setup.ts',
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
@@ -37,6 +38,20 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /parameterization\.spec\.ts/,
+    },
+    {
+      name: "setup-problem",
+      testMatch: /global\.setup\.ts/,
+    },
+    {
+      name: "problem-tests",
+      dependencies: ["setup-problem"],
+      testIgnore: 'tests/login-users/**',
+      testMatch: /.\.spec\.ts/,
+      use: {
+        storageState: "problem-user-state.json",
+      },
     },
 
     // {
